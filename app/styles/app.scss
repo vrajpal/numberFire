@@ -30,10 +30,14 @@ body {
   justify-content: space-between;
   background-color: lightyellow;
 }
-.shotchart-score > div {
+/*.shotchart-score > div {
     width: 200px;
     height: 200px;
     border: 2px dashed red;
+}*/
+
+.time-place {
+    text-align: center;
 }
 
 .team {
@@ -90,10 +94,31 @@ body {
     }
 }
 
+.score {
+    font-size: 4em;
+    font-weight: bold;
+}
+
+.mascot {
+        font-size: 2em;
+}
+
 #golden-state {
     color: $golden;
+    .score {
+        margin-left: 50px;
+        margin-top: -15px;
+    }
+    .location .mascot {
+        margin-top: 5px;
+        margin-left: 5px;
+    }
 }
 
 #thunder {
     color: $thunder;
+    .score {
+        margin-right: 50px;
+        margin-top: -15px;
+    }
 }

@@ -20,10 +20,13 @@ body {
   justify-content: space-between;
   background-color: lightyellow; }
 
-.shotchart-score > div {
-  width: 200px;
-  height: 200px;
-  border: 2px dashed red; }
+/*.shotchart-score > div {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed red;
+}*/
+.time-place {
+  text-align: center; }
 
 .team {
   display: inherit; }
@@ -70,8 +73,24 @@ body {
     color: white;
     margin: 0px; }
 
+.score {
+  font-size: 4em;
+  font-weight: bold; }
+
+.mascot {
+  font-size: 2em; }
+
 #golden-state {
   color: #ffbb00; }
+  #golden-state .score {
+    margin-left: 50px;
+    margin-top: -15px; }
+  #golden-state .location .mascot {
+    margin-top: 5px;
+    margin-left: 5px; }
 
 #thunder {
   color: #007bc5; }
+  #thunder .score {
+    margin-right: 50px;
+    margin-top: -15px; }
