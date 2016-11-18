@@ -2,8 +2,13 @@ body {
     font-family: sans-serif;
 }
 
+.app {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 .shotchart-score {
-  width: 66%;
   display: flex;                  /* establish flex container */
   flex-direction: row;            /* default value; can be omitted */
   flex-wrap: nowrap;              /* default value; can be omitted */
@@ -20,15 +25,12 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 66%;
 }
 
 .play {
-    width: 66%;
     background-color: lightgrey;
     text-align: center;
     margin-bottom: 10px;
-    padding: 5px;
 }
 
 .stats {
@@ -55,14 +57,16 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 66%;
 }
 
 .box {
     width: 375;
+    height: 400px;
     text-align: center;
+    background-color: lightgray;
     h2 {
         background-color: black;
         color: white;
+        margin: 0px;
     }
 }
