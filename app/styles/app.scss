@@ -16,8 +16,31 @@ body {
     border: 2px dashed red;
 }
 
+.shotchart {
+    display: flex;
+    flex-direction: row;
+}
+
 .play {
     width: 66%;
     background-color: lightgrey;
     text-align: center;
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat {
+    height: 100px;
+    width: 100px;
+}
+
+.chart {
+    background-image: url("../images/shotchart.png");
+    width: 776px;
+    height: 426px;
+    background-size: 400px 200px;
+    background-repeat: no-repeat;
 }
