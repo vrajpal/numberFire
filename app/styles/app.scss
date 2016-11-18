@@ -19,6 +19,8 @@ body {
 .shotchart {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: 66%;
 }
 
 .play {
@@ -39,8 +41,8 @@ body {
 
 .chart {
     background-image: url("../images/shotchart.png");
-    width: 776px;
-    height: 426px;
+    width: 400px;
+    height: 200px;
     background-size: 400px 200px;
     background-repeat: no-repeat;
 }
