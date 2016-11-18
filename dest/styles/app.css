@@ -27,7 +27,9 @@ body {
 .play {
   width: 66%;
   background-color: lightgrey;
-  text-align: center; }
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 5px; }
 
 .stats {
   display: flex;
@@ -40,6 +42,21 @@ body {
 .chart {
   background-image: url("../images/shotchart.png");
   width: 400px;
-  height: 200px;
+  height: 230px;
+  text-align: center;
   background-size: 400px 200px;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  background-position-y: 30px; }
+
+.bottom-box-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 66%; }
+
+.box {
+  width: 375;
+  text-align: center; }
+  .box h2 {
+    background-color: black;
+    color: white; }
