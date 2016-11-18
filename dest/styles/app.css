@@ -1,26 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
 body {
-  font-family: sans-serif; }
+  font-family: 'Source Sans Pro', sans-serif; }
 
 .app {
   display: flex;
   flex-direction: row;
   justify-content: space-around; }
 
+.app-left {
+  width: 775px; }
+
+.app-right .box {
+  height: 800px; }
+
 .shotchart-score {
   display: flex;
-  /* establish flex container */
   flex-direction: row;
-  /* default value; can be omitted */
   flex-wrap: nowrap;
-  /* default value; can be omitted */
   justify-content: space-between;
-  /* switched from default (flex-start, see below) */
   background-color: lightyellow; }
 
 .shotchart-score > div {
   width: 200px;
   height: 200px;
   border: 2px dashed red; }
+
+.team {
+  display: inherit; }
 
 .shotchart {
   display: flex;
@@ -63,3 +69,9 @@ body {
     background-color: black;
     color: white;
     margin: 0px; }
+
+#golden-state {
+  color: #ffbb00; }
+
+#thunder {
+  color: #007bc5; }
