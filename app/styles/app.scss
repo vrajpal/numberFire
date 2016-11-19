@@ -7,10 +7,12 @@ $green: #71ab3e;
 $footer-header: #2d363b;
 $selected-game: #606970;
 $game-background: #4f5961;
+$gray-font: #666;
 
 body {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'helvetica';
     background-color: $background;
+    font-size: 16px;
 }
 
 .app {
@@ -35,6 +37,8 @@ body {
     width: 760px;
     height: 110px;
     background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 #shotchart-score-row {
@@ -42,6 +46,7 @@ body {
     width: inherit;
     display: flex;
     justify-content: center;
+    padding-top: 25px;
 }
 
 /*
@@ -57,11 +62,23 @@ body {
     display: inline-block;
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
+    color: $gray-font;
+    font-size: 0.8em;
+    
+    #time {
+        color: black;
+        margin-bottom: 8px;
+    }
+
+    #time, #stadium, #location {
+        display: block;
+    }
 }
 
 .team {
     display: inline-block;
     width: 265px;
+    vertical-align: middle;
 
     #golden-state {
         padding-left: 20px;
@@ -71,8 +88,19 @@ body {
         padding-right: 20px;
     }
 
+    .city {
+        margin-top: 12px;
+        text-transform: uppercase;
+    }
+
+    .mascot {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+    }
+
     .score {
-        font-size: 4em;
+        font-size: 3.5em;
         font-weight: bold;
     }
 }
@@ -83,6 +111,7 @@ body {
 
 .team:last-child {
     margin-left: 30px;
+    text-align: right;
 }
 
 .float-right {
@@ -98,22 +127,46 @@ body {
     flex-direction: row;
     justify-content: space-between;
     background-color: white;
+    padding-bottom: 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .play {
     background-color: lightgrey;
     text-align: center;
-    height: 20px; 
+    height: 20px;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    line-height: 1.8em;
 }
 
 .stats {
     display: flex;
     flex-direction: column;
+    margin: auto;
 }
 
 .stat {
-    height: 100px;
-    width: 100px;
+    border-bottom: 1px solid lightgray;
+    text-align: center;
+    padding-bottom: 8px;
+    margin-top: 10px;
+
+    .stat-name {
+        display: block;
+        color: $gray-font;
+    }
+
+    .stat-value {
+        display: block;
+        color: $golden;
+        font-size: 1.3em;
+    }
+}
+
+.stat:last-child {
+    border: none;
 }
 
 .chart {
@@ -145,29 +198,12 @@ body {
     }
 }
 
-.mascot {
-        font-size: 2em;
-        font-weight: bold;
-}
-
 #golden-state {
     color: $golden;
-    .score {
-        margin-left: 50px;
-        margin-top: -15px;
-    }
-    .location .mascot {
-        margin-top: 5px;
-        margin-left: 5px;
-    }
 }
 
 #thunder {
     color: $thunder;
-    .score {
-        margin-right: 50px;
-        margin-top: -15px;
-    }
 }
 
 .footer {
