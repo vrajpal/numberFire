@@ -31,30 +31,37 @@ body {
     }
 }
 
-.shotchart-score {
+#shotchart-score {
     width: 760px;
     height: 110px;
-    display: flex;             
-    flex-direction: row;            
-    flex-wrap: nowrap;              
-    justify-content: space-between;
     background-color: white;
 }
 
+#shotchart-score-row {
+    overflow: auto;
+    width: inherit;
+    display: flex;
+    justify-content: center;
+}
+
+/*
 .header-divider {
      border-left:1px solid lightgrey; 
      height:46px;
-     margin-top: 25px; 
 }
+*/
 
 .time-place {
     text-align: center;
-    margin-top: 25px;
+    width: 138px;
+    display: inline-block;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
 }
 
 .team {
-    display: inherit;
-    padding-top: 25px;
+    display: inline-block;
+    width: 265px;
 
     #golden-state {
         padding-left: 20px;
@@ -63,6 +70,27 @@ body {
     #thunder {
         padding-right: 20px;
     }
+
+    .score {
+        font-size: 4em;
+        font-weight: bold;
+    }
+}
+
+.team:first-child {
+    margin-right: 30px;
+}
+
+.team:last-child {
+    margin-left: 30px;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
 }
 
 .shotchart {
@@ -115,11 +143,6 @@ body {
         color: white;
         margin: 0px;
     }
-}
-
-.score {
-    font-size: 4em;
-    font-weight: bold;
 }
 
 .mascot {
