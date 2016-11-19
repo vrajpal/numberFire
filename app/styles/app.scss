@@ -2,9 +2,11 @@
 
 $golden: #ffbb00;
 $thunder: #007bc5;
+$background: #bcbcbc;
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
+    background-color: $background;
 }
 
 .app {
@@ -14,7 +16,7 @@ body {
 }
 
 .app-left {
-    width: 775px;
+    width: 760px;
 }
 
 .app-right {
@@ -24,36 +26,50 @@ body {
 }
 
 .shotchart-score {
-  display: flex;             
-  flex-direction: row;            
-  flex-wrap: nowrap;              
-  justify-content: space-between;
-  background-color: lightyellow;
+    width: 760px;
+    height: 110px;
+    display: flex;             
+    flex-direction: row;            
+    flex-wrap: nowrap;              
+    justify-content: space-between;
+    background-color: white;
 }
-/*.shotchart-score > div {
-    width: 200px;
-    height: 200px;
-    border: 2px dashed red;
-}*/
+
+.header-divider {
+     border-left:1px solid lightgrey; 
+     height:46px;
+     margin-top: 25px; 
+}
 
 .time-place {
     text-align: center;
+    margin-top: 25px;
 }
 
 .team {
     display: inherit;
+    padding-top: 25px;
+
+    #golden-state {
+        padding-left: 20px;
+    }
+
+    #thunder {
+        padding-right: 20px;
+    }
 }
 
 .shotchart {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    background-color: white;
 }
 
 .play {
     background-color: lightgrey;
     text-align: center;
-    margin-bottom: 10px;
+    height: 20px; 
 }
 
 .stats {
@@ -86,7 +102,7 @@ body {
     width: 375;
     height: 400px;
     text-align: center;
-    background-color: lightgray;
+    background-color: white;
     h2 {
         background-color: black;
         color: white;
@@ -122,3 +138,51 @@ body {
         margin-top: -15px;
     }
 }
+
+.footer {
+    height: 100px;
+    background-color: dodgerblue;
+    width: 100%;
+}
+
+.league {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    background-color: darkblue;
+    width: 100%;
+    padding-left: 20px;
+    
+    div {
+        width: 150px;
+        height: 18px;
+        color: white;
+        background-color: lightskyblue;
+        padding-left: 15px;
+        border: 1px solid black;
+    }
+}
+
+.arrow-left {
+    width: 20px;
+    height: 75px;
+    background-color: darkgray;
+}
+
+.games {
+    display: flex;
+    flex-direction: row;
+    height: 75px;
+    #selected {
+        width: 560;
+        background-color: gray;
+    }
+
+    .not-selected {
+        width: 110px;
+        background-color: darkgrey;
+        border: 1px solid black;
+    }
+}
+
+
