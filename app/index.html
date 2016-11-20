@@ -1,5 +1,11 @@
+<!doctype html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../dest/styles/app.css">
     </head>
     <body>
@@ -7,11 +13,11 @@
             <div class="app-left">
                 <div id="shotchart-score">
                     <div id="shotchart-score-row">
-                        <div class="team" id="golden-state">
-                        <div class="float-left">
-                                <div class="city">Golden State </div>                
-                                <div class="mascot">Warriors</div> 
-                        </div>                     
+                        <div class="team golden-state-font-color">
+                            <div class="float-left">
+                                    <div class="city">Golden State </div>                
+                                    <div class="mascot">Warriors</div> 
+                            </div>                     
                             <div class="score float-right">96</div>
                         </div>
                         <div class="time-place">
@@ -19,7 +25,7 @@
                             <span id="stadium">Oracle Arena</span>
                             <span id="location">Oakland, CA</span>
                         </div>           
-                        <div class="team" id="thunder">
+                        <div class="team thunder-font-color">
                             <div class="float-right">
                                 <div class="city">OKLAHOMA CITY </div>
                                 <div class="mascot">THUNDER</div>
@@ -33,70 +39,110 @@
                     <div class="stats">
                         <div class="stat">
                             <span class="stat-name">FG%</span>
-                            <span class="stat-value">55.7%</span>
+                            <span class="stat-value golden-state-font-color">55.7%</span>
                         </div>
                         <div class="stat">
                             <span class="stat-name">FT%</span>
-                            <span class="stat-value">60.0%</span>
+                            <span class="stat-value golden-state-font-color">60.0%</span>
                         </div>
                         <div class="stat">
                             <span class="stat-name">3P%</span>
-                            <span class="stat-value">55.5%</span>
+                            <span class="stat-value golden-state-font-color">55.5%</span>
                         </div>
                     
                     </div>
                     <div class="chart">
-                        <span>SHOW: RECENT SHOTS</span>
+                        <div id="shot-selector">
+                            <div>Show: <span class="bold-text">Recent Shots</span><div class="caret"></div></div>
+                        </div>
+                        <img class="shotchart-image" src="images/shotchart.png" />
                     </div>
                     <div class="stats">
                         <div class="stat">
                             <span class="stat-name">FG%</span>
-                            <span class="stat-value">47.1%</span>
+                            <span class="stat-value thunder-font-color">47.1%</span>
                         </div>
                         <div class="stat">
                             <span class="stat-name">FT%</span>
-                            <span class="stat-value">80.0%</span>
+                            <span class="stat-value thunder-font-color">80.0%</span>
                         </div>
                         <div class="stat">
                             <span class="stat-name">3P%</span>
-                            <span class="stat-value">36.4%</span>
+                            <span class="stat-value thunder-font-color">36.4%</span>
                         </div>
                     
                     </div> 
                 </div>
                 <div class="bottom-box-container">
-                    <div class="box"><h2>PLAY BY PLAY</h2></div>
-                    <div class="box"><h2>STATS</h2></div>
+                    <div class="box"><span class="box-title">Play by Play</span></div>
+                    <div class="box"><span class="box-title">Stats</span></div>
                 </div>
             </div>
             <div class="app-right">
-                <div class="box"><h2>YOUR SCORE</h2></div>
+                <div class="box"><span class="box-title">Your Scoring</span></div>
             </div>
         </div>
         <div class="footer">
             <div class="league">
-                <div id="selected-league">NBA</div>
-                <div>MLB</div>
-                <div>NCAAF</div>
+                <ul>
+                    <li><a class="active" href="#">NBA</a></li>
+                    <li><a href="#">MLB</a></li>
+                    <li><a href="#">NCAAF</a></li>
+                </ul>
             </div>
             <div class="games">
-                <div class="arrow-left"></div>
+                <div id="navigate-left"><div class="caret"></div></div>
                 <div id="selected">
-                    <div class="selected-score">
-                        <div>
-                            WARRIORS
-                            <span>96</span>
+                    <div id="selected-score">
+                        <div class="team-row">
+                            <span class="mascot">WARRIORS</span>
+                            <span class="score">96</span>
                         </div>
-                        <div>
-                            THUNDER
-                            <span>81</span>
-                        </div>                        
+                        <div class="team-row">
+                            <span class="mascot">THUNDER</span>
+                            <span class="score">81</span>
+                        </div>
+                        <span id="game-info">7:34 4th &middot; TV: ESPN</span>                
+                    </div>
+                    <div class="game-player-stats">
+                        <span class="team-initials">GSW</span>
+                        <div class="player-info">
+                            <span class="player-name">S. Curry, PG</span>
+                            <span class="player-stats">23 points, 6 assists</span>
+                        </div>
+                    </div>
+                    <div class="game-player-stats">
+                        <span class="team-initials">OKC</span>
+                        <div class="player-info">
+                            <span class="player-name">K. Durant, SF</span>
+                            <span class="player-stats">30 points, 9 rebounds</span>
+                        </div>
                     </div>
                 </div>
-                <div class="not-selected"></div>
-                <div class="not-selected"></div>
+                <div class="not-selected">
+                    <div class="team-row">
+                        <span class="team-initial">CHI</span>
+                        <span class="team-score">56</span>
+                    </div>
+                    <div class="team-row">
+                        <span class="team-initial">BOS</span>
+                        <span class="team-score">54</span>
+                    </div>
+                    <span class="game-info">6:33 3rd</span>
+                </div>
+                <div class="not-selected">
+                    <div class="team-row">
+                        <span class="team-initial">ATL</span>
+                        <span class="team-score">26</span>
+                    </div>
+                    <div class="team-row">
+                        <span class="team-initial">MEM</span>
+                        <span class="team-score">24</span>
+                    </div>
+                    <span class="game-info">12:00 2nd</span>
+                </div>
+                <div id="navigate-right"><div class="caret"></div></div>
             </div>
-
         </div>
     </body>
 </html>

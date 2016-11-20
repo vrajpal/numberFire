@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-
 $golden: #ffbb00;
 $thunder: #007bc5;
 $background: #bcbcbc;
 $green: #71ab3e;
 $footer-header: #2d363b;
-$selected-game: #606970;
+$selected-game: #616a71;
 $game-background: #4f5961;
 $gray-font: #666;
 
@@ -16,20 +14,44 @@ body {
 }
 
 .app {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    margin: auto;
+    overflow: hidden;
+    width: 1100px;
 }
 
 .app-left {
     width: 760px;
+    float: left;
 }
 
 .app-right {
+    float: left;
+    margin-left: 10px;
+
     .box {
         height: 840px;
         width: 330px;
-        margin-left: -165px;
+    }
+}
+
+@media (max-width: 1124px) {
+    .app {
+        width: 100%;
+    }
+    .app-left {
+        float: none;
+        margin: auto;
+    }
+
+    .app-right {
+        margin: 10px auto;
+        float: none;
+        width: 760px;
+
+        .box {
+            height: 840px;
+            width: 760px;
+        }
     }
 }
 
@@ -60,14 +82,15 @@ body {
     text-align: center;
     width: 138px;
     display: inline-block;
-    border-left: 1px solid lightgray;
-    border-right: 1px solid lightgray;
+    border-left: 1px solid #bcbcbc;
+    border-right: 1px solid #bcbcbc;
     color: $gray-font;
     font-size: 0.8em;
     
     #time {
         color: black;
         margin-bottom: 8px;
+        font-weight: bold;
     }
 
     #time, #stadium, #location {
@@ -133,7 +156,7 @@ body {
 }
 
 .play {
-    background-color: lightgrey;
+    background-color: #f2f2f2;
     text-align: center;
     height: 20px;
     text-transform: uppercase;
@@ -150,8 +173,8 @@ body {
 .stat {
     border-bottom: 1px solid lightgray;
     text-align: center;
-    padding-bottom: 8px;
-    margin-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 12px;
 
     .stat-name {
         display: block;
@@ -160,7 +183,6 @@ body {
 
     .stat-value {
         display: block;
-        color: $golden;
         font-size: 1.3em;
     }
 }
@@ -170,39 +192,58 @@ body {
 }
 
 .chart {
-    background-image: url("../images/shotchart.png");
+    text-align: center;
+}
+
+.shotchart-image {
     width: 400px;
     height: 230px;
-    text-align: center;
-    background-size: 400px 200px;
-    background-repeat: no-repeat;
-    background-position-y: 30px;
+}
+
+#shot-selector {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 0.8em;
 }
 
 .bottom-box-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin-top: 10px;
-}
+    overflow: auto;
 
-.box {
-    width: 375;
-    height: 400px;
-    text-align: center;
-    background-color: white;
-    h2 {
-        background-color: black;
-        color: white;
-        margin: 0px;
+    .box:first-child {
+        margin-right: 5px;
+    }
+
+    .box:last-child {
+        margin-left: 5px;
     }
 }
 
-#golden-state {
+.box {
+    width: 375px;
+    height: 400px;
+    float: left;
+    text-align: center;
+    background-color: white;
+    .box-title {
+        background-color: black;
+        color: white;
+        margin: 0px;
+        display: block;
+        text-transform: uppercase;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-weight: bold;
+        font-size: 0.8em;
+    }
+}
+
+.golden-state-font-color {
     color: $golden;
 }
 
-#thunder {
+.thunder-font-color {
     color: $thunder;
 }
 
@@ -210,35 +251,58 @@ body {
     height: 90px;
     background-color: $game-background;
     width: 100%;
+    bottom: 0;
+    left: 0;
+    position: fixed;
 }
 
 .league {
-    display: flex;
-    flex-direction: row;
-    height: 20px;
+    height: 26px;
     background-color: $footer-header;
-    width: 100%;
     padding-left: 20px;
-    
-    div {
-        width: 150px;
-        height: 18px;
+
+    ul {
+        padding: 0;
+        margin: 0;
+
+        li {
+            list-style: none;
+            float: left;
+        }
+
+        a {
+            text-decoration: none;
+            color: #6d7579;
+            padding-left: 15px;
+            padding-right: 100px;
+            height: 26px;
+            line-height: 28px;
+            display: block;
+            font-size: 0.9em;
+            border-right: 1px solid #4c5458;
+        }
+    }
+
+    .active {
+        background-color: $green;
+        font-weight: bold;
         color: white;
-        background-color: $footer-header;
-        padding-left: 15px;
-        border: 1px solid black;
     }
 }
 
-#selected-league {
-    background-color: $green;
-    font-weight: bold;
-}
-
-.arrow-left {
+#navigate-left {
     width: 20px;
     height: 75px;
     background-color: $game-background;
+    cursor: pointer;
+}
+
+#navigate-right {
+    width: 20px;
+    height: 75px;
+    cursor: pointer;
+    right: 0;
+    position: absolute;
 }
 
 .games {
@@ -247,19 +311,162 @@ body {
     height: 75px;
     background-color: $game-background;
     #selected {
-        width: 560;
+        padding-top: 10px;
+        padding-right: 35px;
+        color: white;
         background-color: $selected-game;
     }
 
     .not-selected {
         width: 110px;
         border-right: 1px solid white;
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        color: #a7acb0;
+        border-right: 1px solid #7b8389;
+
+        .team-score {
+            font-weight: bold;
+            float: right;
+        }
+
+        .game-info {
+            font-size: 0.75em;
+            display: block;
+            margin-top: 8px;
+        }
     }
 }
 
-.selected-score {
+#selected-score {
+    width: 145px;
+    overflow: auto;
+    float: left;
      span {
         margin-left: 15px;
      }
+
+     .score {
+         float: right;
+         font-weight: bold;
+     }
+
+     #game-info {
+         font-size: 0.75em;
+         margin-top: 10px;
+         display: block;
+         margin-top: 8px;
+     }
 }
 
+.game-player-stats {
+    float: left;
+    overflow: auto;
+    margin-left: 35px;
+
+    .team-initials {
+        float: left;
+        display: block;
+        font-weight: bold;
+        font-size: 0.75em;
+    }
+    .player-info {
+        float: left;
+        display: block;
+        margin-left: 20px;
+    }
+    .player-name {
+        display: block;
+        font-weight: bold;
+        font-size: 0.95em;
+    }
+    .player-stats {
+        display: block;
+        font-size: 0.75em;
+    }
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+#shot-selector .caret {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-top: -8px;
+}
+
+#shot-selector .caret:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top: 6px solid #000000;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+}
+
+#shot-selector .caret:after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0;
+  border-top: 3px solid #eeeeee;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+}
+
+#navigate-left .caret {
+  position: relative;
+  margin-top: 30px;
+  margin-left: 5px;
+}
+
+#navigate-left .caret:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-right: 6px solid #a7acb0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+#navigate-left .caret:after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  border-right: 5px solid $game-background;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+#navigate-right .caret {
+  position: relative;
+  margin-top: 30px;
+  margin-left: 5px;
+}
+
+#navigate-right .caret:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 6px solid #a7acb0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+#navigate-right .caret:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  border-left: 5px solid #4f5961;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
