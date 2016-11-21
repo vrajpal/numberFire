@@ -409,4 +409,7 @@ body {
     margin-left: 15px;
     margin-top: 5px; }
   .not-selected .team-score {
-    float: none !important; } }
+    float: none !important; }
+  .time-place {
+    padding-left: 5px;
+    padding-right: 5px; } }
