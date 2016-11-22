@@ -2,6 +2,9 @@ var express = require('express');
 var games = require('./data/games.json');
 var teams = require('./data/teams.json');
 var gameState = require('./data/game_state.json');
+var players = require('./data/players.json');
+var playerStats = require('./data/player_stats.json');
+
 var app = express();
 
 app.use(express.static('dest'));
@@ -51,6 +54,11 @@ app.get('/games', function (req, res) {
   console.log(jsonStr);
   res.send(jsonStr);
   //res.send('Hello World!');
+});
+
+app.get('/leaders', function(req, res) { 
+  var gameId = req.query.game_id;
+  console.log(gameId);
 });
 
 app.listen(3000, function () {
