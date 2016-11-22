@@ -89,12 +89,13 @@ function swapGame() {
         if(games[i].team1.initials === newTeam) {
             setSelectedProperties(games[i]);
         }
-        
+        if(games[i].team1.initials === oldTeam) {
+            setNotSelectedProperties(this, games[i]);
+        }
     }
 }
 
 function setSelectedProperties(game) {
-    console.log(game);
     var selected = document.getElementById('selected');
     selected.getElementsByClassName('mascot')[0].innerHTML = game.team1.mascot;
     selected.getElementsByClassName('mascot')[1].innerHTML = game.team2.mascot;
@@ -111,8 +112,13 @@ function setSelectedProperties(game) {
 
 }
 
-function setNotSelectedProperties(game) {
-    console.log(game);
+function setNotSelectedProperties(el, game) {
+    el.getElementsByClassName('team-initial')[0].innerHTML = game.team1.initials;
+    el.getElementsByClassName('team-initial')[1].innerHTML = game.team2.initials;
+    el.getElementsByClassName('team-score')[0].innerHTML = game.team1.score;
+    el.getElementsByClassName('team-score')[1].innerHTML = game.team2.score;
+
+    el.getElementsByClassName('game-info')[0].innerHTML = game.state;
 }
 
 setTickerClicks();
