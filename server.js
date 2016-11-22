@@ -4,6 +4,7 @@ var teams = require('./data/teams.json');
 var gameState = require('./data/game_state.json');
 var app = express();
 
+app.use(express.static('dest'));
 
 
 app.get('/games', function (req, res) {
