@@ -40,7 +40,6 @@ app.get('/games', function (req, res) {
           team.away_team_id = teams.Teams[j].full_name;
         }
       }
-      console.log(gameState);
       for (var k = 0; k < gameState.GameState.length; k++){
         if(gameState.GameState[k].game_id == game_id){
           team.home_team_score = gameState.GameState[k].home_team_score;
@@ -57,8 +56,13 @@ app.get('/games', function (req, res) {
 });
 
 app.get('/leaders', function(req, res) { 
+  var leader = {};
   var gameId = req.query.game_id;
-  console.log(gameId);
+  var jsonStr = '{"leaders":[]}';
+  var obj = JSON.parse(jsonStr);
+  for(var i = 0; i < playerStats.PlayerStats.length; i++){
+
+  }
 });
 
 app.listen(3000, function () {
