@@ -1,0 +1,28 @@
+{
+	"Games": [{
+		"id": 1,
+		"home_team_id": 1,
+		"away_team_id": 2,
+		"date": "01/01/2016"
+	}, {
+		"id": 2,
+		"home_team_id": 3,
+		"away_team_id": 4,
+		"date": "01/01/2016"
+	}, {
+		"id": 3,
+		"home_team_id": 5,
+		"away_team_id": 6,
+		"date": "01/01/2016"
+	}, {
+		"id": 4,
+		"home_team_id": 2,
+		"away_team_id": 3,
+		"date": "01/02/2016"
+	}, {
+		"id": 5,
+		"home_team_id": 1,
+		"away_team_id": 4,
+		"date": "01/03/2016"
+	}]
+}
