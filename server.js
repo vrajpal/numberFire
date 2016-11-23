@@ -61,7 +61,7 @@ app.get('/leaders', function(req, res) {
   var jsonStr = '{"leaders":[]}';
   var obj = JSON.parse(jsonStr);
   for(var i = 0; i < playerStats.PlayerStats.length; i++){
-
+    console.log(playerStats.PlayerStats[i].nerd);
   }
 });
 
