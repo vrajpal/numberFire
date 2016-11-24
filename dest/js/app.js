@@ -1,5 +1,5 @@
 "use strict";
-
+// array of games and their leaders
 var games = [];
  var game1  = {
             team1: {
@@ -72,6 +72,7 @@ var games = [];
 
 var selectedGame = games.game1;
 
+//add on click events to ticker not selected ticker games
 function setTickerClicks() {
     var notSelected =  document.getElementsByClassName('not-selected');
     for(var i = 0; i < notSelected.length; i++) {
@@ -79,6 +80,7 @@ function setTickerClicks() {
     }
 }
 
+// finds appropriate games to swap
 function swapGame() {
     var newTeam = this.getElementsByClassName('team-initial')[0].innerText;
     console.log(newTeam);
@@ -95,6 +97,7 @@ function swapGame() {
     }
 }
 
+//injects correct data into 'selected game' div
 function setSelectedProperties(game) {
     var selected = document.getElementById('selected');
     selected.getElementsByClassName('mascot')[0].innerHTML = game.team1.mascot;
@@ -112,6 +115,7 @@ function setSelectedProperties(game) {
 
 }
 
+// replaces the non selected div with info from former selected game
 function setNotSelectedProperties(el, game) {
     el.getElementsByClassName('team-initial')[0].innerHTML = game.team1.initials;
     el.getElementsByClassName('team-initial')[1].innerHTML = game.team2.initials;
