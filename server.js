@@ -7,95 +7,100 @@ var playerStats = require('./data/player_stats.json');
 
 var app = express();
 
+//set express to search for static content in dest folder by default
 app.use(express.static('dest'));
 
-
+// games route which returns games and scores on a given date
+// date must be given in all numerical fashion *MMDDYEAR* ]
+// example date: Jan 1 2016 => 01012016
 app.get('/games', function (req, res) {
   var date = req.query.date;
-  console.log(date);
-  var month = date.substring(0,2);
-  var day = date.substring(2,4);
-  var year = date.substring(4);
-  var conString = month+'/'+day+'/'+year;
-  var jsonStr = '{"teams":[]}';
-  var returnJson = JSON.parse(jsonStr);
-  var teamsHolder = [];
-  for(var j = 0; j < teams.Teams.length; j++){
-    var obj = {};
-    obj.abbrev = teams.Teams[j].abbrev;
-    obj.full_name = teams.Teams[j].full_name;
-    teamsHolder[j+1] = obj;
-  }
-  var gameStateHolder = [];
-  for(var j = 0; j < gameState.GameState.length; j++){
-    var obj = {};
-    obj.home_team_score = gameState.GameState[j].home_team_score;
-    obj.away_team_score = gameState.GameState[j].away_team_score;
-    obj.broadcast = gameState.GameState[j].broadcast;
-    obj.quarter = gameState.GameState[j].quarter;
-    obj.time_left = gameState.GameState[j].time_left_in_quarter;
-    obj.game_status = gameState.GameState[j].game_status;
-    gameStateHolder[gameState.GameState[j].game_id] = obj;
-  }
-  for (var i = 0; i < games.Games.length; i++){
-    // look for the entry with a matching `code` value
-    if (games.Games[i].date == conString){
-      var team = {};
-      var game_id = games.Games[i].id;
-      var home_team_id = games.Games[i].home_team_id;
-      var away_team_id = games.Games[i].away_team_id;
-      team.homeTeamName = teamsHolder[home_team_id].full_name;
-      team.homeTeamAbbrev = teamsHolder[home_team_id].abbrev;
-      team.awayTeamName = teamsHolder[away_team_id].full_name;
-      team.awayTeamAbbrev = teamsHolder[away_team_id].abbrev;
-      team.homeTeamScore = gameStateHolder[game_id].home_team_score
-      team.awayTeamScore = gameStateHolder[game_id].away_team_score
-      team.broadCast = gameStateHolder[game_id].broadcast;
-      team.time_left = gameStateHolder[game_id].time_left;
-      team.game_status = gameStateHolder[game_id].game_status;
-      team.quarter = gameStateHolder[game_id].quarter;
-      returnJson['teams'].push(team);
+  // if date is sent in an invalid format send an error
+  if(date.length < 8){
+    res.status(400).send("Invalid date.");
+  } else {
+    var month = date.substring(0,2);
+    var day = date.substring(2,4);
+    var year = date.substring(4);
+    var conString = month+'/'+day+'/'+year;
+    var jsonStr = '{"teams":[]}';
+    var returnJson = JSON.parse(jsonStr);
+    var teamsHolder = [];
+    // loops to form a key to object mapping of team information
+    // the key being team id (index of array) and value being corresponding object
+    for(var j = 0; j < teams.Teams.length; j++){
+      teamsHolder[j+1] = teams.Teams[j];
     }
+    var gameStateHolder = [];
+    // 
+    for(var j = 0; j < gameState.GameState.length; j++){
+      gameStateHolder[gameState.GameState[j].game_id] = gameState.GameState[j];
+    }
+    for (var i = 0; i < games.Games.length; i++){
+      // look for the entries with matching dates 
+      if (games.Games[i].date == conString){
+        var team = {};
+        var game_id = games.Games[i].id;
+        var home_team_id = games.Games[i].home_team_id;
+        var away_team_id = games.Games[i].away_team_id;
+        team.homeTeamName = teamsHolder[home_team_id].full_name;
+        team.homeTeamAbbrev = teamsHolder[home_team_id].abbrev;
+        team.awayTeamName = teamsHolder[away_team_id].full_name;
+        team.awayTeamAbbrev = teamsHolder[away_team_id].abbrev;
+        team.homeTeamScore = gameStateHolder[game_id].home_team_score
+        team.awayTeamScore = gameStateHolder[game_id].away_team_score
+        team.broadCast = gameStateHolder[game_id].broadcast;
+        team.time_left = gameStateHolder[game_id].time_left;
+        team.game_status = gameStateHolder[game_id].game_status;
+        team.quarter = gameStateHolder[game_id].quarter;
+        returnJson['teams'].push(team);
+      }
+    }
+    jsonStr = JSON.stringify(returnJson);
+    res.send(jsonStr);
   }
-  jsonStr = JSON.stringify(returnJson);
-  res.send(jsonStr);
+  
 });
 
 app.get('/leaders', function(req, res) { 
-  var leaders = [];
   var gameId = req.query.game_id;
-  var jsonStr = '{"leaders":[]}';
-  var returnJson = JSON.parse(jsonStr);
-  for(var i = 0; i < playerStats.PlayerStats.length; i++){
-    //console.log(playerStats.PlayerStats[i].nerd);
-    if(playerStats.PlayerStats[i].game_id == gameId){
-      leaders.push(playerStats.PlayerStats[i]);
+  if(gameId < 0) {
+    res.status(400).send('Invalid ID');
+  } else {
+    var leaders = [];
+    var jsonStr = '{"leaders":[]}';
+    var returnJson = JSON.parse(jsonStr);
+    for(var i = 0; i < playerStats.PlayerStats.length; i++){
+      if(playerStats.PlayerStats[i].game_id == gameId){
+        leaders.push(playerStats.PlayerStats[i]);
+      }
     }
-  }
-  leaders.sort(compare);
+    leaders.sort(compare);
 
-  var playersHolder = [];
-  for(var idx = 0; idx < players.Players.length; idx++) {
-    playersHolder[idx + 1] = players.Players[idx];
-  }
+    var playersHolder = [];
+    for(var idx = 0; idx < players.Players.length; idx++) {
+      playersHolder[idx + 1] = players.Players[idx];
+    }
 
-  var playerStatsHolder = [];
-  for(var idx = 0; idx < playerStats.PlayerStats.length; idx++) {
-    var playerId = playerStats.PlayerStats[idx].player_id;
-    var nerdScore = playerStats.PlayerStats[idx].nerd;
-    playerStatsHolder[nerdScore] = playerStats.PlayerStats[idx];
-  }
+    var playerStatsHolder = [];
+    for(var idx = 0; idx < playerStats.PlayerStats.length; idx++) {
+      var playerId = playerStats.PlayerStats[idx].player_id;
+      var nerdScore = playerStats.PlayerStats[idx].nerd;
+      playerStatsHolder[nerdScore] = playerStats.PlayerStats[idx];
+    }
 
+    
+    var secondMaxNerdScore = leaders[leaders.length - 2].nerd;
+    var maxNerdScore = leaders[leaders.length - 1].nerd;
+
+    var leader1 = buildLeaderObject(playerStatsHolder, playersHolder, maxNerdScore);
+    returnJson['leaders'].push(leader1);
+    var leader2 = buildLeaderObject(playerStatsHolder, playersHolder, secondMaxNerdScore);
+    returnJson['leaders'].push(leader2);
+    jsonStr = JSON.stringify(returnJson);
+    res.send(jsonStr);
+  }
   
-  var secondMaxNerdScore = leaders[leaders.length - 2].nerd;
-  var maxNerdScore = leaders[leaders.length - 1].nerd;
-
-  var leader1 = buildLeaderObject(playerStatsHolder, playersHolder, maxNerdScore);
-  returnJson['leaders'].push(leader1);
-  var leader2 = buildLeaderObject(playerStatsHolder, playersHolder, secondMaxNerdScore);
-  returnJson['leaders'].push(leader2);
-  jsonStr = JSON.stringify(returnJson);
-  res.send(jsonStr);
 });
 
 app.listen(3000, function () {
@@ -129,6 +134,5 @@ function buildLeaderObject(playerStatsHolder, playersHolder, nerdScore){
   leader.points = playerStats.points;
   leader.assists = playerStats.assists;
   leader.rebounds = playerStats.rebounds;
-  console.log(leader);
   return leader;
 }
