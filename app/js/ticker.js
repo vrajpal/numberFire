@@ -1,5 +1,5 @@
 "use strict";
-
+//example ajax call using endpoints set up on the server I created
 function getGames(){
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'games?date=01012016');
@@ -20,5 +20,4 @@ function processGames(data) {
         console.log(games.teams[i].homeTeamName);
     }
 }
-
 getGames();
