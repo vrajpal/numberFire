@@ -11,7 +11,7 @@ app.use(express.static('dest'));
 
 
 app.get('/games', function (req, res) {
-   var date = req.query.date;
+  var date = req.query.date;
   console.log(date);
   var month = date.substring(0,2);
   var day = date.substring(2,4);
@@ -26,7 +26,6 @@ app.get('/games', function (req, res) {
     obj.full_name = teams.Teams[j].full_name;
     teamsHolder[j+1] = obj;
   }
-  console.log(teamsHolder);
   var gameStateHolder = [];
   for(var j = 0; j < gameState.GameState.length; j++){
     var obj = {};
@@ -38,8 +37,6 @@ app.get('/games', function (req, res) {
     obj.game_status = gameState.GameState[j].game_status;
     gameStateHolder[gameState.GameState[j].game_id] = obj;
   }
-  console.log(gameStateHolder);
-  console.log(conString);
   for (var i = 0; i < games.Games.length; i++){
     // look for the entry with a matching `code` value
     if (games.Games[i].date == conString){
@@ -47,43 +44,28 @@ app.get('/games', function (req, res) {
       var game_id = games.Games[i].id;
       var home_team_id = games.Games[i].home_team_id;
       var away_team_id = games.Games[i].away_team_id;
-      // console.log(home_team_id);
-      // console.log(teamsHolder[home_team_id].full_name);
-      var homeTeamName = teamsHolder[home_team_id].full_name;
-      var homeTeamAbbrev = teamsHolder[home_team_id].abbrev;
-      var awayTeamName = teamsHolder[away_team_id].full_name;
-      var awayTeamAbbrev = teamsHolder[away_team_id].abbrev;
-      var homeTeamScore = gameStateHolder[game_id].home_team_score
-      var awayTeamScore = gameStateHolder[game_id].away_team_score
-      var broadCast = gameStateHolder[game_id].broadcast;
-      var time_left = gameStateHolder[game_id].time_left;
-      var game_status = gameStateHolder[game_id].game_status;
-      var quarter = gameStateHolder[game_id].quarter;
-      team.homeTeamName = homeTeamName;
-      team.homeTeamAbbrev = homeTeamAbbrev;
-      team.homeTeamScore = homeTeamScore;
-      team.awayTeamName = awayTeamName;
-      team.awayTeamAbbrev = awayTeamAbbrev;
-      team.awayTeamScore = awayTeamScore;
-      team.broadCast = broadCast;
-      team.time_left = time_left;
-      team.game_status = game_status;
-      team.quarter = quarter;
-
+      team.homeTeamName = teamsHolder[home_team_id].full_name;
+      team.homeTeamAbbrev = teamsHolder[home_team_id].abbrev;
+      team.awayTeamName = teamsHolder[away_team_id].full_name;
+      team.awayTeamAbbrev = teamsHolder[away_team_id].abbrev;
+      team.homeTeamScore = gameStateHolder[game_id].home_team_score
+      team.awayTeamScore = gameStateHolder[game_id].away_team_score
+      team.broadCast = gameStateHolder[game_id].broadcast;
+      team.time_left = gameStateHolder[game_id].time_left;
+      team.game_status = gameStateHolder[game_id].game_status;
+      team.quarter = gameStateHolder[game_id].quarter;
       returnJson['teams'].push(team);
     }
   }
   jsonStr = JSON.stringify(returnJson);
-  console.log(jsonStr);
   res.send(jsonStr);
-  //res.send('Hello World!');
 });
 
 app.get('/leaders', function(req, res) { 
   var leaders = [];
   var gameId = req.query.game_id;
   var jsonStr = '{"leaders":[]}';
-  var obj = JSON.parse(jsonStr);
+  var returnJson = JSON.parse(jsonStr);
   for(var i = 0; i < playerStats.PlayerStats.length; i++){
     //console.log(playerStats.PlayerStats[i].nerd);
     if(playerStats.PlayerStats[i].game_id == gameId){
@@ -94,35 +76,30 @@ app.get('/leaders', function(req, res) {
 
   var playersHolder = [];
   for(var idx = 0; idx < players.Players.length; idx++) {
-    playersHolder[idx + 1] = players.Players[idx].name;
+    playersHolder[idx + 1] = players.Players[idx];
   }
 
   var playerStatsHolder = [];
   for(var idx = 0; idx < playerStats.PlayerStats.length; idx++) {
     var playerId = playerStats.PlayerStats[idx].player_id;
     var nerdScore = playerStats.PlayerStats[idx].nerd;
-    playerStatsHolder[nerdScore] = playerId;
+    playerStatsHolder[nerdScore] = playerStats.PlayerStats[idx];
   }
+
   
   var secondMaxNerdScore = leaders[leaders.length - 2].nerd;
   var maxNerdScore = leaders[leaders.length - 1].nerd;
-  console.log(leaders);
-  
-  var maxScorePlayerLookup = playerStatsHolder[maxNerdScore];
-  var maxScoreName = playersHolder[maxScorePlayerLookup];
 
-  console.log("Max Score: " + maxScoreName);
-
-  var secondMaxScorePlayerLookup = playerStatsHolder[secondMaxNerdScore];
-  var secondMaxScoreName = playersHolder[secondMaxScorePlayerLookup];
-
-  console.log("Second Max Score: " + secondMaxScoreName);
-
-  res.send("end it");
+  var leader1 = buildLeaderObject(playerStatsHolder, playersHolder, maxNerdScore);
+  returnJson['leaders'].push(leader1);
+  var leader2 = buildLeaderObject(playerStatsHolder, playersHolder, secondMaxNerdScore);
+  returnJson['leaders'].push(leader2);
+  jsonStr = JSON.stringify(returnJson);
+  res.send(jsonStr);
 });
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('numberFire listening on port 3000!');
 });
 
 
@@ -140,4 +117,18 @@ function compare(a, b) {
       return -1;
     }
   }
+}
+
+function buildLeaderObject(playerStatsHolder, playersHolder, nerdScore){
+  var leader = {};
+  var playerInfo = playersHolder[playerStatsHolder[nerdScore].player_id];
+  var playerStats = playerStatsHolder[nerdScore];
+  leader.leaderName = playerInfo.name;
+  leader.teamId = playerInfo.team_id;
+  leader.nerd = nerdScore;
+  leader.points = playerStats.points;
+  leader.assists = playerStats.assists;
+  leader.rebounds = playerStats.rebounds;
+  console.log(leader);
+  return leader;
 }
