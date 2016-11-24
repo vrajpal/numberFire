@@ -37,7 +37,8 @@ app.get('/games', function (req, res) {
       gameStateHolder[gameState.GameState[j].game_id] = gameState.GameState[j];
     }
     for (var i = 0; i < games.Games.length; i++){
-      // look for the entries with matching dates 
+      // look for the entries with matching dates
+      // use look up tables formed about to compile all relavant info 
       if (games.Games[i].date == conString){
         var team = {};
         var game_id = games.Games[i].id;
@@ -57,6 +58,7 @@ app.get('/games', function (req, res) {
       }
     }
     jsonStr = JSON.stringify(returnJson);
+    // return JSON
     res.send(jsonStr);
   }
   
@@ -70,29 +72,33 @@ app.get('/leaders', function(req, res) {
     var leaders = [];
     var jsonStr = '{"leaders":[]}';
     var returnJson = JSON.parse(jsonStr);
+    // find all players associated with the game id
     for(var i = 0; i < playerStats.PlayerStats.length; i++){
       if(playerStats.PlayerStats[i].game_id == gameId){
         leaders.push(playerStats.PlayerStats[i]);
       }
     }
+    // sort by nerd score (see compare function below)
     leaders.sort(compare);
-
+    // create lookup table where index is player id and value is corresponding player object
     var playersHolder = [];
     for(var idx = 0; idx < players.Players.length; idx++) {
       playersHolder[idx + 1] = players.Players[idx];
     }
 
     var playerStatsHolder = [];
+    //create lookup table where nerdscore is key and value is corresponding stat object
     for(var idx = 0; idx < playerStats.PlayerStats.length; idx++) {
       var playerId = playerStats.PlayerStats[idx].player_id;
       var nerdScore = playerStats.PlayerStats[idx].nerd;
       playerStatsHolder[nerdScore] = playerStats.PlayerStats[idx];
     }
 
-    
+    // from the sorted leaders array grab the top two performers
     var secondMaxNerdScore = leaders[leaders.length - 2].nerd;
     var maxNerdScore = leaders[leaders.length - 1].nerd;
 
+    //build object and add to JSON
     var leader1 = buildLeaderObject(playerStatsHolder, playersHolder, maxNerdScore);
     returnJson['leaders'].push(leader1);
     var leader2 = buildLeaderObject(playerStatsHolder, playersHolder, secondMaxNerdScore);
@@ -107,7 +113,7 @@ app.listen(3000, function () {
   console.log('numberFire listening on port 3000!');
 });
 
-
+// compare function that sorts on nerdscores and breaks ties with points
 function compare(a, b) {
   if(a.nerd > b.nerd) {
     return 1;
@@ -124,6 +130,8 @@ function compare(a, b) {
   }
 }
 
+//takes the two lookup tables and nerd score for a player and compiles relavant
+//info and returns object 
 function buildLeaderObject(playerStatsHolder, playersHolder, nerdScore){
   var leader = {};
   var playerInfo = playersHolder[playerStatsHolder[nerdScore].player_id];
