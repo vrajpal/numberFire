@@ -413,3 +413,7 @@ body {
   .time-place {
     padding-left: 5px;
     padding-right: 5px; } }
+
+@media (max-width: 375px) {
+  .shotchart-image {
+    width: 350px; } }
