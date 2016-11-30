@@ -100,24 +100,10 @@ app.get('/leaders', function(req, res) {
     for(var idx = 0; idx < players.Players.length; idx++) {
       playersHolder[idx + 1] = players.Players[idx];
     }
-
-    var playerStatsHolder = [];
-    //create lookup table where nerdscore is key and value is corresponding stat object
-    for(var idx = 0; idx < playerStats.PlayerStats.length; idx++) {
-      var playerId = playerStats.PlayerStats[idx].player_id;
-      var nerdScore = playerStats.PlayerStats[idx].nerd;
-      playerStatsHolder[nerdScore] = playerStats.PlayerStats[idx];
+    for(var j = 0; j < leaders.length; j++){
+      var leader = buildLeaderObject(playersHolder, leaders[j]);
+      returnJson['leaders'].push(leader);
     }
-
-    // from the sorted leaders array grab the top two performers
-    var secondMaxNerdScore = leaders[leaders.length - 2].nerd;
-    var maxNerdScore = leaders[leaders.length - 1].nerd;
-
-    //build object and add to JSON
-    var leader1 = buildLeaderObject(playerStatsHolder, playersHolder, maxNerdScore);
-    returnJson['leaders'].push(leader1);
-    var leader2 = buildLeaderObject(playerStatsHolder, playersHolder, secondMaxNerdScore);
-    returnJson['leaders'].push(leader2);
     jsonStr = JSON.stringify(returnJson);
     res.send(jsonStr);
   }
@@ -130,14 +116,14 @@ app.listen(3000, function () {
 
 // compare function that sorts on nerdscores and breaks ties with points
 function compare(a, b) {
-  if(a.nerd > b.nerd) {
+  if(a.nerd < b.nerd) {
     return 1;
   }
-  if(a.nerd < b.nerd) {
+  if(a.nerd > b.nerd) {
     return -1;
   }
   if(a.nerd === b.nerd) {
-    if(a.points > b.points){
+    if(a.points < b.points){
       return 1;
     } else {
       return -1;
@@ -145,17 +131,14 @@ function compare(a, b) {
   }
 }
 
-//takes the two lookup tables and nerd score for a player and compiles relavant
-//info and returns object 
-function buildLeaderObject(playerStatsHolder, playersHolder, nerdScore){
-  var leader = {};
-  var playerInfo = playersHolder[playerStatsHolder[nerdScore].player_id];
-  var playerStats = playerStatsHolder[nerdScore];
-  leader.leaderName = playerInfo.name;
-  leader.teamId = playerInfo.team_id;
-  leader.nerd = nerdScore;
-  leader.points = playerStats.points;
-  leader.assists = playerStats.assists;
-  leader.rebounds = playerStats.rebounds;
-  return leader;
+function buildLeaderObject(playersHolder, playerStats){
+    var leader = {};
+    var playerInfo = playersHolder[playerStats.player_id];
+    leader.leaderName = playerInfo.name;
+    leader.teamId = playerInfo.team_id;
+    leader.nerd = playerStats.nerd;
+    leader.points = playerStats.points;
+    leader.assists = playerStats.assists;
+    leader.rebounds = playerStats.rebounds;
+    return leader;
 }
