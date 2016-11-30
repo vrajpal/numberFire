@@ -14,14 +14,24 @@ app.use(express.static('dest'));
 // date must be given in all numerical fashion *MMDDYEAR* ]
 // example date: Jan 1 2016 => 01012016
 app.get('/games', function (req, res) {
+
   var date = req.query.date;
-  // if date is sent in an invalid format send an error
-  if(date.length < 8){
-    res.status(400).send("Invalid date.");
+  //if no date is given in query parameter
+  if(date === undefined){
+    res.status(400).send('No date provided');
+    // if date is sent in an invalid format send an error
+  } else if (date.length < 8){
+    res.status(400).send('Invalid date.');
   } else {
     var month = date.substring(0,2);
     var day = date.substring(2,4);
     var year = date.substring(4);
+    var validDate = new Date(year, month, day);
+    console.log(validDate);
+    if(validDate == 'Invalid Date'){ 
+      res.status(400).send('Invalid Date');
+      return;
+    }
     var conString = month+'/'+day+'/'+year;
     var jsonStr = '{"teams":[]}';
     var returnJson = JSON.parse(jsonStr);
@@ -66,7 +76,12 @@ app.get('/games', function (req, res) {
 
 app.get('/leaders', function(req, res) { 
   var gameId = req.query.game_id;
-  if(gameId < 0) {
+  if(gameId === undefined){ 
+    res.status(400).send('No game_id provided');
+    // if date is sent in an invalid format send an error
+  } else if(isNaN(parseInt(gameId))) {
+    res.status(400).send('Is not a valid number');
+  } else if(gameId < 0) {
     res.status(400).send('Invalid ID');
   } else {
     var leaders = [];
